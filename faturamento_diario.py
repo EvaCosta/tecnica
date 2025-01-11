@@ -1,5 +1,21 @@
 import json
 
+def calcular_faturamento(faturamento):
+    valores = [d["valor"] for d in faturamento if d["valor"] > 0]
+    if not valores:
+        return "Nenhum faturamento válido encontrado."
+    
+    media_mensal = sum(valores) / len(valores)
+    menor_valor = min(valores)
+    maior_valor = max(valores)
+    dias_acima_media = sum(1 for valor in valores if valor > media_mensal)
+
+    return {
+        "menor_valor": menor_valor,
+        "maior_valor": maior_valor,
+        "dias_acima_media": dias_acima_media,
+    }
+
 # Simulação do JSON de faturamento
 faturamento_json = '''
 [
@@ -14,13 +30,8 @@ faturamento_json = '''
 '''
 
 faturamento = json.loads(faturamento_json)
+resultado = calcular_faturamento(faturamento)
 
-valores = [d["valor"] for d in faturamento if d["valor"] > 0]
-media_mensal = sum(valores) / len(valores)
-menor_valor = min(valores)
-maior_valor = max(valores)
-dias_acima_media = sum(1 for valor in valores if valor > media_mensal)
-
-print(f"Menor valor de faturamento: {menor_valor:.2f}")
-print(f"Maior valor de faturamento: {maior_valor:.2f}")
-print(f"Dias com faturamento acima da média: {dias_acima_media}")
+print(f"Menor valor de faturamento: {resultado['menor_valor']:.2f}")
+print(f"Maior valor de faturamento: {resultado['maior_valor']:.2f}")
+print(f"Dias com faturamento acima da média: {resultado['dias_acima_media']}")

@@ -1,11 +1,17 @@
+import math
+
 def is_fibonacci(num):
-    a, b = 0, 1
-    while b <= num:
-        if b == num:
-            return f"{num} pertence à sequência de Fibonacci."
-        a, b = b, a + b
+    def is_perfect_square(x):
+        s = int(math.sqrt(x))
+        return s * s == x
+
+    cond1 = is_perfect_square(5 * num**2 + 4)
+    cond2 = is_perfect_square(5 * num**2 - 4)
+
+    if cond1 or cond2:
+        return f"{num} pertence à sequência de Fibonacci."
     return f"{num} NÃO pertence à sequência de Fibonacci."
 
-# Número a ser testado
+# Entrada do usuário
 numero = int(input("Digite um número: "))
 print(is_fibonacci(numero))
